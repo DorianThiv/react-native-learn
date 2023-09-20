@@ -43,19 +43,13 @@ const App = () => {
   
     const renderItem = ({ item, index }) => (
         <View style={styles.task}>
-            <Text
-                style={styles.itemList}>{item}</Text>
-            <View
-                style={styles.taskButtons}>
-                <TouchableOpacity
-                    onPress={() => handleEditTask(index)}>
-                    <Text
-                        style={styles.editButton}>Edit</Text>
+            <Text style={styles.itemList}>{item}</Text>
+            <View style={styles.taskButtons}>
+                <TouchableOpacity onPress={() => handleEditTask(index)}>
+                    <Text style={styles.editButton}>Edit</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => handleDeleteTask(index)}>
-                    <Text
-                        style={styles.deleteButton}>Delete</Text>
+                <TouchableOpacity onPress={() => handleDeleteTask(index)}>
+                    <Text style={styles.deleteButton}>Delete</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -63,26 +57,15 @@ const App = () => {
   
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>Geeksforgeeks</Text>
-            <Text style={styles.title}>ToDo App</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Enter task"
-                value={task}
-                onChangeText={(text) => setTask(text)}
-            />
-            <TouchableOpacity
-                style={styles.addButton}
-                onPress={handleAddTask}>
+            <Text style={styles.heading}>Subrosa</Text>
+            <Text style={styles.title}>Logs list</Text>
+            <TextInput style={styles.input} placeholder="Enter task" value={task} onChangeText={(text) => setTask(text)} />
+            <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>
                 <Text style={styles.addButtonText}>
-                    {editIndex !== -1 ? "Update Task" : "Add Task"}
+                  {editIndex !== -1 ? "Update Task" : "Add Task"}
                 </Text>
             </TouchableOpacity>
-            <FlatList
-                data={tasks}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
-            />
+            <FlatList data={tasks} renderItem={renderItem} keyExtractor={(item, index) => index.toString()} />
         </View>
     );
 };
@@ -91,7 +74,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 40,
-        marginTop: 40,
+        marginTop: 0,
     },
     title: {
         fontSize: 24,
