@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         marginBottom: 7,
-        color: "green",
+        color: '#8f30c2',
     },
     input: {
         borderWidth: 3,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     addButton: {
-        backgroundColor: "green",
+        backgroundColor: "#8f30c2",
         padding: 10,
         borderRadius: 5,
         marginBottom: 10,
@@ -122,12 +122,12 @@ const styles = StyleSheet.create({
     },
     editButton: {
         marginRight: 10,
-        color: "green",
+        color: "#8f30c2",
         fontWeight: "bold",
         fontSize: 18,
     },
     deleteButton: {
-        color: "red",
+        color: "#e64c4c",
         fontWeight: "bold",
         fontSize: 18,
     },
