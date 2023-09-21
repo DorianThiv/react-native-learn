@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface NumberInputProps {
   onClick: (v: number) => void;
@@ -12,11 +12,32 @@ function NumberInput({ onClick }: NumberInputProps) {
 
   return (
     <div>
-      <input type="number" style={styles.input} pattern="[0-9]*" value={value} onChange={(e) => {
+      <input type="number" style={styles.input} pattern="^-[0-9]*$" value={value} onChange={(e) => {
         setValue(e.target.validity.valid ? parseInt(e.target.value) : value);
       }}/>
       <button style={styles.button} onClick={(e) => onClick(value)}>Add delta</button>
     </div>
+  )
+
+}
+
+interface CountTextProps {
+  count: number;
+}
+
+function CountText({ count }: CountTextProps) {
+
+  const [color, setColor] = useState({ r: 168, g: 164, b: 50 });
+
+  useEffect(() => {
+    var cg = color.g - (count);
+    cg = cg <= 0 ? 1 : cg;
+    cg = cg >= 255 ? 255 : cg;
+    setColor({ r: 168, g: cg, b: 50 });
+  }, [count]);
+
+  return (
+    <Text style={{...styles.text, ...{ color: `rgb(${color.r}, ${color.g}, ${color.b})` }}}>Count: {count}</Text>
   )
 
 }
@@ -31,14 +52,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Count: {count}</Text>
+      <CountText count={count}></CountText>
       <StatusBar style="auto" />
       <br></br>
       <NumberInput onClick={handleClick}></NumberInput>
       <br></br>
       <div>
-        <button style={styles.button} onClick={(e) => handleClick(-1)}>Click to -1</button>
-        <button style={styles.button} onClick={(e) => handleClick(1)}>Click to +1</button>
+        <button style={styles.button} onClick={() => handleClick(-1)}>Click to -1</button>
+        <button style={styles.button} onClick={() => handleClick(1)}>Click to +1</button>
       </div>
     </View>
   );
@@ -52,7 +73,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    fontSize: 50
+    fontSize: 50,
+    color: '#333'
   },
   input: {
     width: 200,
