@@ -1,22 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface NumberInputProps {
-  onClick: (v: number) => void;
+  onClick: (v: string) => void;
 }
 
 function NumberInput({ onClick }: NumberInputProps) {
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState('');
 
   return (
-    <div>
-      <input type="number" style={styles.input} pattern="^-[0-9]*$" value={value} onChange={(e) => {
-        setValue(e.target.validity.valid ? parseInt(e.target.value) : value);
-      }}/>
-      <button style={styles.button} onClick={(e) => onClick(value)}>Add delta</button>
-    </div>
+    <View style={styles.containerField}>
+      <TextInput keyboardType='numeric' style={styles.input} value={value} onChangeText={(v) => setValue(v)}></TextInput>
+      <Pressable style={styles.button} onPress={(e) => onClick(value)}>
+        <Text style={styles.textBtn}>Add delta</Text>
+      </Pressable>
+    </View>
   )
 
 }
@@ -33,6 +33,7 @@ function CountText({ count }: CountTextProps) {
     var cg = color.g - (count);
     cg = cg <= 0 ? 1 : cg;
     cg = cg >= 255 ? 255 : cg;
+    cg = isNaN(cg) ? 0 : cg;
     setColor({ r: 168, g: cg, b: 50 });
   }, [count]);
 
@@ -46,21 +47,26 @@ export default function App() {
 
   const [count, setCount] = useState(0);
 
-  function handleClick(delta: number) {
-    setCount(count + delta);
+  function handleClick(delta: string) {
+    const v = parseInt(delta);
+    if (!isNaN(v)) {
+      setCount(count + v);
+    }
   }
 
   return (
     <View style={styles.container}>
       <CountText count={count}></CountText>
       <StatusBar style="auto" />
-      <br></br>
       <NumberInput onClick={handleClick}></NumberInput>
-      <br></br>
-      <div>
-        <button style={styles.button} onClick={() => handleClick(-1)}>Click to -1</button>
-        <button style={styles.button} onClick={() => handleClick(1)}>Click to +1</button>
-      </div>
+      <View style={styles.containerField}>
+        <Pressable style={styles.button} onPress={(e) => handleClick('-1')}>
+          <Text style={styles.textBtn}>Click to -1</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={(e) => handleClick('1')}>
+          <Text style={styles.textBtn}>Click to +1</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -72,19 +78,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  containerField: {
+    padding: 20,
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   text: {
     fontSize: 50,
     color: '#333'
   },
   input: {
     width: 200,
-    height: 30,
+    height: 50,
     padding: 10,
     borderWidth: 1,
     borderColor: '#888'
   },
   button: {
-    height: 52,
-    margin: 10
-  }
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    height: 50,
+    backgroundColor: 'black',
+    margin: 10,
+  },
+  textBtn: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  },
 });

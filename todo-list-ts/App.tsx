@@ -34,14 +34,11 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
       <View style={styles.inputWrapper}>
-        <TextInput
-          placeholder="Enter your todo task..."
-          value={value}
+        <TextInput placeholder="Enter your todo task..." value={value} style={styles.inputBox}
           onChangeText={e => {
             setValue(e);
             showError(false);
           }}
-          style={styles.inputBox}
         />
         <Button title="Add Task" onPress={handleSubmit} />
       </View>
